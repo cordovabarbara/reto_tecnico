@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'net.serenity-bdd.serenity-gradle-plugin' version '4.1.12'
+}
+
+group = 'co.sqasa'
+version = '1.0-SNAPSHOT'
+
+ext {
+    serenityVersion = '4.1.12'
+    junitVersion = '5.10.0'
+    seleniumVersion = '4.16.1'
+    assertJVersion = '3.24.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation "net.serenity-bdd:serenity-core:${serenityVersion}"
+    testImplementation "net.serenity-bdd:serenity-screenplay:${serenityVersion}"
+    testImplementation "net.serenity-bdd:serenity-screenplay-webdriver:${serenityVersion}"
+    testImplementation "net.serenity-bdd:serenity-junit5:${serenityVersion}"
+    testImplementation "net.serenity-bdd:serenity-reports:${serenityVersion}"
+
+    testImplementation "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+
+    testImplementation "org.hamcrest:hamcrest:2.2"
+    testImplementation "org.assertj:assertj-core:${assertJVersion}"
+    testImplementation "org.slf4j:slf4j-simple:2.0.9"
+}
+
+test {
+    useJUnitPlatform()
+
+    systemProperties = [
+            'webdriver.driver': 'chrome',
+            'serenity.take.screenshots': 'FOR_EACH_ACTION',
+            'serenity.project.name': 'Reto Tecnico',
+            'serenity.test.root': 'co.sqasa'
+    ]
+
+    finalizedBy aggregate
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
