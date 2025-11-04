@@ -34,6 +34,10 @@ dependencies {
     testImplementation "org.slf4j:slf4j-simple:2.0.9"
 }
 
+serenity {
+    projectName = 'Reto Tecnico'
+    outputDirectory = file("target/site/serenity")
+}
 test {
     useJUnitPlatform()
 
